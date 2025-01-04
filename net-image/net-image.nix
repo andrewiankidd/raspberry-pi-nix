@@ -1,31 +1,21 @@
-# This module creates a bootable netboot image containing the given NixOS
-# configuration. The generated image consists of a `/boot` partition
-# (for TFTP boot) and a `/root` partition (for NFS root). The goal is to
+# This module creates the files necessary containing the given NixOS
+# configuration. The generated directories consists of a `boot` directory
+# (for TFTP boot) and a `root` directory (for NFS root). The goal is to
 # allow the system to boot over the network, using TFTP to retrieve the
 # boot files and NFS to mount the root filesystem, enabling fully
 # headless deployment of the NixOS system.
 
-# The generated netboot image consists of two directories:
-# - `/boot`: Contains the necessary bootloader, kernel, and initrd files
+# The generated files consists of two directories:
+# - `boot`: Contains the necessary bootloader, kernel, and initrd files
 #   required for booting the system. These files will be served via TFTP
 #   to the target machine.
-# - `/root`: Contains the root filesystem that will be mounted by the
+# - `root`: Contains the root filesystem that will be mounted by the
 #   target machine over NFS. This is typically an ext4 root partition
 #   populated with the necessary NixOS configuration.
-
-# The image is generated in such a way that it can be used to netboot a
-# Raspberry Pi (or any other compatible hardware) directly, as long as
-# the appropriate network boot infrastructure (TFTP server for `/boot`
-# and NFS server for `/root`) is configured.
 
 # The image does not include a bootable SD card but instead prepares the
 # filesystem and boot files for network-based booting. The NixOS
 # configuration will be automatically applied when the system boots.
-
-# The generated image will be placed in
-# config.system.build.netImage. This image is intended to be deployed
-# to a TFTP server (for the boot files) and an NFS server (for the root
-# filesystem) for a fully headless, network-booted NixOS system.
 
 # Note: This module assumes that you have already set up the TFTP and
 # NFS servers on your network, and the target machine is configured
@@ -47,16 +37,16 @@ in
   options.netImage = {
     rootDirectoryName = mkOption {
       default =
-        "${config.netImage.imageBaseName}-${config.system.nixos.label}-${pkgs.stdenv.hostPlatform.system}";
+        "${config.netImage.directoryBaseName}-${config.system.nixos.label}-${pkgs.stdenv.hostPlatform.system}";
       description = ''
         Name of the generated root directory.
       '';
     };
 
-    imageBaseName = mkOption {
+    directoryBaseName = mkOption {
       default = "nixos-net-image";
       description = ''
-        Prefix of the name of the generated image file.
+        Prefix of the name of the generated root directory.
       '';
     };
 
@@ -70,7 +60,7 @@ in
 
     nfsRoot = mkOption {
       type = types.str;
-      default = "192.168.0.108:/mnt/nfsshare/${config.netImage.imageBaseName}-${config.system.nixos.label}-${pkgs.stdenv.hostPlatform.system}";
+      default = "192.168.0.108:/mnt/nfsshare/${config.netImage.directoryBaseName}-${config.system.nixos.label}-${pkgs.stdenv.hostPlatform.system}";
       description = ''
         cmdline.txt nfs parameter for the root filesystem.
       '';
