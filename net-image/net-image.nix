@@ -71,8 +71,8 @@ in
       default = [
           # Disable file locking
           "nolock"
-          # Mount the filesystem read-only
-          "ro"
+          # Mount the filesystem read-write
+          "rw"
           # Use NFS version 3
           "vers=3"
           # Set the read buffer size to 131072 bytes
