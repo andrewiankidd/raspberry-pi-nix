@@ -28,7 +28,7 @@ with lib;
 let
   rootfsImage = pkgs.callPackage (builtins.path { path = ./make-root-fs.nix; }) ({
     inherit (config.netImage) storePaths;
-    populateImageCommands = config.netImage.populateRootCommands;
+    populateRootCommands = config.netImage.populateRootCommands;
   });
 in
 {

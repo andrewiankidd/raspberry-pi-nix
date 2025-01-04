@@ -11,14 +11,9 @@
     boot.kernelParams = [
       "rw"
       "nfsroot=${config.netImage.nfsRoot},v3"
-    #   "ip=dhcp"
       "root=/dev/nfs"
       "rootwait"
       "elevator=deadline"
-    #   "console=tty1"
-    #   "console=serial0,115200n8"
-    #   "init=/sbin/init"
-    #   "loglevel=7"
       "systemd.debug_shell=1"
       "systemd.log_level=debug"
       "disable_splash"
@@ -26,7 +21,6 @@
       "earlyprintk=serial,ttyS0,115200"
       "initcall_debug"
       "printk.time=1"
-      # "drm.debug=0x1f"
     ];
 
     netImage =

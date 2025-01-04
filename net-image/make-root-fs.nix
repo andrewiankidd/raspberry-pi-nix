@@ -8,7 +8,7 @@
   storePaths,
   # Shell commands to populate the ./files directory.
   # All files in that directory are copied to the root of the FS.
-  populateImageCommands ? "",
+  populateRootCommands ? "",
   perl
 }:
 
@@ -23,9 +23,9 @@ pkgs.stdenv.mkDerivation {
   ];
 
   buildCommand = ''
-    echo "Populating image with command: ${populateImageCommands}"
+    echo "Populating image with command: ${populateRootCommands}"
     mkdir -p ./files
-    ${populateImageCommands}
+    ${populateRootCommands}
 
     echo "Preparing store paths for image..."
     # Create nix/store before copying path
