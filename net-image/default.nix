@@ -9,18 +9,28 @@
     boot.consoleLogLevel = lib.mkDefault 8;
 
     boot.kernelParams = [
-      "ro"
-      "nfsroot=${config.netImage.nfsRoot},v3"
-      "root=/dev/nfs"
-      "rootwait"
-      "elevator=deadline"
-      "systemd.debug_shell=1"
-      "systemd.log_level=debug"
-      "disable_splash"
-      "nomodeset"
-      "earlyprintk=serial,ttyS0,115200"
-      "initcall_debug"
-      "printk.time=1"
+        # Read-only root filesystem
+        "ro"
+        # NFS root filesystem location
+        "nfsroot=${config.netImage.nfsRoot},v3"
+        # Root filesystem device
+        "root=/dev/nfs"
+        # Wait for root filesystem
+        "rootwait"
+        # I/O scheduler
+        "elevator=deadline"
+        # Enable systemd debug shell
+        "systemd.debug_shell=1"
+        # Set systemd log level to debug
+        "systemd.log_level=info"
+        # Disable splash screen
+        "disable_splash"
+        # Early printk to serial console
+        "earlyprintk=serial,ttyS0,115200"
+        # Enable initcall debugging
+        "initcall_debug"
+        # Print timestamps in printk messages
+        "printk.time=1"
     ];
 
     netImage =
