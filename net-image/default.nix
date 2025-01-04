@@ -9,7 +9,7 @@
     boot.consoleLogLevel = lib.mkDefault 8;
 
     boot.kernelParams = [
-      "rw"
+      "ro"
       "nfsroot=${config.netImage.nfsRoot},v3"
       "root=/dev/nfs"
       "rootwait"
