@@ -22,7 +22,7 @@
         # Enable systemd debug shell
         "systemd.debug_shell=1"
         # Set systemd log level to debug
-        "systemd.log_level=info"
+        "systemd.log_level=debug"
         # Disable splash screen
         "disable_splash"
         # Early printk to serial console
@@ -31,6 +31,8 @@
         "initcall_debug"
         # Print timestamps in printk messages
         "printk.time=1"
+        "drm.debug=0x1f"
+        "nomodeset"
     ];
 
     netImage =
