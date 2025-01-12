@@ -31,7 +31,6 @@
         "initcall_debug"
         # Print timestamps in printk messages
         "printk.time=1"
-        "drm.debug=0x1f"
         "nomodeset"
     ];
 
