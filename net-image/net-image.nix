@@ -142,10 +142,6 @@ in
     boot.initrd.network.flushBeforeStage2 = lib.mkForce false;
     boot.initrd.systemd.network.wait-online.enable = true;
     boot.initrd.systemd.network.wait-online.timeout = 0;
-    boot.initrd.postDeviceCommands = ''
-        echo "Giving network some time to init..."
-        sleep 10
-    '';
     boot.initrd.preFailCommands = ''
         echo "Boot failed, rebooting in 10 seconds..."
         sleep 10
