@@ -32,6 +32,11 @@
         # Print timestamps in printk messages
         "printk.time=1"
         "nomodeset"
+
+        # https://github.com/k3s-io/k3s/issues/2067
+        "cgroup_enable=cpuset"
+        "cgroup_enable=memory"
+        "cgroup_memory=1"
     ];
 
     netImage =
