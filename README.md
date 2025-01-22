@@ -10,7 +10,7 @@ this repository aims to deliver the following benefits:
    that will be familiar to those who have used Raspberry Pi's
    [config.txt based
    configuration](https://www.raspberrypi.com/documentation/computers/config_txt.html).
-3. Make it easy to build an image suitable for flashing to an sd-card,
+3. Make it easy to build an image suitable for flashing to an sd-card or booting over the network,
    without the need to first go through an installation media.
 
 The important modules are `overlay/default.nix`, `rpi/default.nix`,
@@ -45,9 +45,20 @@ suitable for flashing to an sd-card can be found at the attribute
 nix build '.#nixosConfigurations.rpi-example.config.system.build.sdImage'
 ```
 
+## Building for booting over network
+
+Include the provided `net-image` nixos module this flake provides, then directories
+suitable for hosting over TFTP and NFS can be found at the attribute
+`config.system.build.netImage`. For example, if you wanted to build an image for
+`rpi-net-example` in the above configuration example you could run:
+
+```
+nix build '.#nixosConfigurations.rpi-net-example.config.system.build.netImage'
+```
+
 ## The firmware partition
 
-The image produced by this package is partitioned in the same way as the aarch64
+The SD image produced by this package is partitioned in the same way as the aarch64
 installation media from nixpkgs: There is a firmware partition that contains
 necessary firmware, the kernel or u-boot, and config.txt. Then there is another
 partition (labeled `NIXOS_SD`) that contains everything else. The firmware and

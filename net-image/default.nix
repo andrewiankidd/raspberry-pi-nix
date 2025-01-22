@@ -22,7 +22,7 @@
         # Enable systemd debug shell
         "systemd.debug_shell=1"
         # Set systemd log level to debug
-        "systemd.log_level=info"
+        "systemd.log_level=debug"
         # Disable splash screen
         "disable_splash"
         # Early printk to serial console
@@ -31,6 +31,16 @@
         "initcall_debug"
         # Print timestamps in printk messages
         "printk.time=1"
+        # Disable GPU during boot
+        "nomodeset"
+
+        # https://github.com/k3s-io/k3s/issues/2067
+        # Enable cpuset cgroup
+        "cgroup_enable=cpuset"
+        # Enable memory cgroup
+        "cgroup_enable=memory"
+        # Enable cgroup memory controller
+        "cgroup_memory=1"
     ];
 
     netImage =

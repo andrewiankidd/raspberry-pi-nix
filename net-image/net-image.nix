@@ -103,6 +103,8 @@ in
           "noatime"
           # Do not update directory inode access times on reads
           "nodiratime"
+          # No attribute caching
+          "noac"
         ];
       description = ''
         NFS options to use when mounting the root filesystem.
@@ -140,6 +142,13 @@ in
     # boot
     boot.initrd.network.enable = lib.mkForce true;
     boot.initrd.network.flushBeforeStage2 = lib.mkForce false;
+    boot.initrd.systemd.network.wait-online.enable = true;
+    boot.initrd.systemd.network.wait-online.timeout = 0;
+    boot.initrd.preFailCommands = ''
+        echo "Boot failed, rebooting in 10 seconds..."
+        sleep 10
+        echo b >/proc/sysrq-trigger
+    '';
     boot.initrd.supportedFilesystems = [
         # Network File System (NFS) support for mounting root over the network
         "nfs"
