@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     u-boot-src = {
       flake = false;
       url = "https://ftp.denx.de/pub/u-boot/u-boot-2024.07.tar.bz2";
@@ -45,7 +49,7 @@
     };
   };
 
-  outputs = srcs@{ self, ... }:
+  outputs = srcs@{ self, sops-nix, ... }:
     let
       pinned = import srcs.nixpkgs {
         system = "aarch64-linux";
@@ -69,11 +73,11 @@
       nixosConfigurations = {
         rpi-example = srcs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          modules = [ self.nixosModules.raspberry-pi self.nixosModules.sd-image ./example ];
+          modules = [ sops-nix.nixosModules.sops self.nixosModules.raspberry-pi self.nixosModules.sd-image ./example ];
         };
         rpi-net-example = srcs.nixpkgs.lib.nixosSystem {
           system = "aarch64-linux";
-          modules = [ self.nixosModules.raspberry-pi self.nixosModules.net-image ./example ];
+          modules = [ sops-nix.nixosModules.sops self.nixosModules.raspberry-pi self.nixosModules.net-image ./example ];
         };
       };
       checks.aarch64-linux = self.packages.aarch64-linux;
