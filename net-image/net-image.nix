@@ -103,6 +103,8 @@ in
           "noatime"
           # Do not update directory inode access times on reads
           "nodiratime"
+          # No attribute caching
+          "noac"
         ];
       description = ''
         NFS options to use when mounting the root filesystem.
